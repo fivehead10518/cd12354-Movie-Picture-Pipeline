@@ -6,7 +6,7 @@ on:
       - main
     paths:
       - 'frontend/**'
-  workflow_dispatch:
+  workflow_dispatch:  #allows manual triggering of the workflow
 
 jobs:
   lint:
@@ -17,15 +17,15 @@ jobs:
         working-directory: frontend
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6 #see github actions documentation for more details, >v5 required for node >20
 
       - name: Setup NodeJS
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
-          node-version: 18
+          node-version: 24  #version 20 is depreceated, using 24 as the latest LTS version
 
       - name: Cache dependencies
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/frontend/package-lock.json') }}
@@ -46,15 +46,15 @@ jobs:
         working-directory: ./frontend
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Setup NodeJS
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: 18
 
       - name: Cache dependencies
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('frontend/package-lock.json') }}
@@ -78,7 +78,7 @@ jobs:
       REACT_APP_MOVIE_API_URL: http://localhost:5000
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Build Docker image
         run: |

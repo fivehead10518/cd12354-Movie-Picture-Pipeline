@@ -20,11 +20,12 @@ RUN mkdir -p /var/www/app && mkdir /app
 WORKDIR /app
 
 COPY Pipfile* /app
-RUN cd /app && pipenv install --system --deploy
 
 # WICHTIG: Erlaubt GCC 15, uwsgi trotz inkompatibler Pointer-Typen zu kompilieren
 ENV CFLAGS="-Wno-error=incompatible-pointer-types"
 ENV LDFLAGS="-Wno-error=incompatible-pointer-types"
+
+RUN cd /app && pipenv install --system --deploy
 
 RUN pipenv install --system --deploy
 

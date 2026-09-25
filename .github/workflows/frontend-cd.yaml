@@ -8,9 +8,6 @@ on:
       - 'frontend/**'
   workflow_dispatch:
 
-env:
-  REACT_APP_MOVIE_API_URL: http://a2a0062b5861b419db3ed80d0f58fb77-1767015689.us-east-1.elb.amazonaws.com
-
 jobs:
   lint:
     name: Lint Frontend
@@ -68,7 +65,7 @@ jobs:
         run: npm ci
 
       - name: Run tests
-        run: CI=true npm test
+        run: npm run test
 
   build-and-deploy:
     name: Build, Push and Deploy Frontend
@@ -97,6 +94,7 @@ jobs:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: ${{ secrets.ECR_FRONTEND_REPOSITORY }}
           IMAGE_TAG: ${{ github.sha }}
+          REACT_APP_MOVIE_API_URL: ${{ vars.REACT_APP_MOVIE_API_URL }}
         run: |
           docker build \
             --build-arg=REACT_APP_MOVIE_API_URL=$REACT_APP_MOVIE_API_URL \

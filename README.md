@@ -11,16 +11,21 @@ cd frontend && npm run lint
 ```
 
 ### Build and Run with Docker Locally
-
+#### Backend
 ```bash
 cd backend
 docker build -t mp-backend:local .
 docker run --rm --name mp-backend -p 5000:5000 mp-backend:local
 ```
+#### Frontend
 ```bash
 cd frontend
 docker build --build-arg REACT_APP_MOVIE_API_URL=http://localhost:5000 -t mp-frontend:local .
 docker run --rm --name mp-frontend -p 3000:3000 mp-frontend:local
+```
+#### Delete containers after testing
+```bash
+docker stop mp-backend mp-frontend
 ```
 
 ## Deploy to AWS EKS
@@ -86,20 +91,20 @@ terraform destroy
 ```
 
 ## Project Deliverables
-
-### Required Evidence for Submission
 **Frontend Live View**
-Browser screenshot showing rendered movie list at Load Balancer URL
+![alt text](screenshots/frontend-web.png)
 
 **Backend API Response**
-Browser or terminal (`curl`) showing JSON response from `/movies` endpoint
+![alt text](screenshots/backend-curl.png)
 
 **Kubernetes Cluster Status**
+![alt text](screenshots/kubernetes-status.png)
 
-`kubectl get pods`
-`kubectl get svc`
-
-**GitHub Actions Pipelines** | Green status views for all 4 workflows: Frontend CI, Frontend CD, Backend CI, Backend CD
+**GitHub Actions Pipelines**
+![alt text](screenshots/frontend-cd.png)
+![alt text](screenshots/frontend-ci.png)
+![alt text](screenshots/backend-cd.png)
+![alt text](screenshots/backend-ci.png)
 
 **Amazon ECR Repositories**
-AWS Console view showing private repositories with pushed images
+![alt text](screenshots/aws-ecr-registry.png)

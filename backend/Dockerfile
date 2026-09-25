@@ -1,5 +1,6 @@
 FROM public.ecr.aws/docker/library/python:3.10-alpine
 ENV FLASK_RUN_HOST=0.0.0.0
+ENV PYTHONPATH=/
 
 WORKDIR /
 RUN adduser -u 1000 -D app
@@ -33,4 +34,4 @@ COPY . /app
 
 EXPOSE 5000
 
-CMD uwsgi --http :5000 --master --enable-threads -s /var/www/app/app.sock --manage-script-name --mount /=app:app
+CMD uwsgi --http :5000 --master --enable-threads -s /var/www/app/app.sock --manage-script-name --mount /=app:app --pythonpath /
